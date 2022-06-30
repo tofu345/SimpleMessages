@@ -161,6 +161,7 @@ function createInfoMessage(
   duration = 0.5,
   title,
   content,
+  timeout = 10,
   className = "wb-info-msg"
 ) {
   const msgWrapper = document.getElementById("wb-msg-wrapper");
@@ -202,6 +203,9 @@ function createInfoMessage(
     ele.style.transform = "translate(0, 0)";
     ele.style.opacity = "1";
     ele.style.animation = "";
+    if (timeout) {
+      setTimeout(() => hideMessage("msg-" + id), timeout * 1000);
+    }
   }, (duration + 0.1) * 1000);
 }
 
@@ -209,6 +213,7 @@ function createWarningMessage(
   duration = 0.5,
   title,
   content,
+  timeout,
   className = "wb-warning-msg"
 ) {
   const msgWrapper = document.getElementById("wb-msg-wrapper");
@@ -250,6 +255,9 @@ function createWarningMessage(
     ele.style.transform = "translate(0, 0)";
     ele.style.opacity = "1";
     ele.style.animation = "";
+    if (timeout) {
+      setTimeout(() => hideMessage("msg-" + id), timeout * 1000);
+    }
   }, (duration + 0.1) * 1000);
 }
 
@@ -257,6 +265,7 @@ function createErrorMessage(
   duration = 0.5,
   title,
   content,
+  timeout,
   className = "wb-error-msg"
 ) {
   const msgWrapper = document.getElementById("wb-msg-wrapper");
@@ -298,6 +307,9 @@ function createErrorMessage(
     ele.style.transform = "translate(0, 0)";
     ele.style.opacity = "1";
     ele.style.animation = "";
+    if (timeout) {
+      setTimeout(() => hideMessage("msg-" + id), timeout * 1000);
+    }
   }, (duration + 0.1) * 1000);
 }
 
@@ -305,6 +317,7 @@ function createSuccessMessage(
   duration = 0.5,
   title,
   content,
+  timeout,
   className = "wb-success-msg"
 ) {
   const msgWrapper = document.getElementById("wb-msg-wrapper");
@@ -346,5 +359,8 @@ function createSuccessMessage(
     ele.style.transform = "translate(0, 0)";
     ele.style.opacity = "1";
     ele.style.animation = "";
+    if (timeout) {
+      setTimeout(() => hideMessage("msg-" + id), timeout * 1000);
+    }
   }, (duration + 0.1) * 1000);
 }
