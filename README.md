@@ -1,6 +1,6 @@
 # SimpleMessages
 
-https://cdn.jsdelivr.net/gh/tofu345/SimpleMessages/wb-messages.v1.js
+https://cdn.jsdelivr.net/gh/tofu345/SimpleMessages@master/wb-messages.v1.js
 
 # Setup
 
