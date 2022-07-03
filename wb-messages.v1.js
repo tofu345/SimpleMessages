@@ -95,7 +95,7 @@ var messageStyles = `
             opacity: 1;
         }
     }`;
-var successSvg = `
+var errorSvg = `
     <svg
         class="wb-msg-svg"
         width="48"
@@ -113,7 +113,7 @@ var successSvg = `
         />
     </svg>
       `;
-var errorSvg = `
+var successSvg = `
     <svg
         class="wb-msg-svg"
         width="48"
@@ -282,7 +282,7 @@ function createErrorMessage(
   }
   msgWrapper.innerHTML += `
     <div id="msg-${id}" class="wb-msg ${className}" style="transform: translateX(38rem); opacity: 0; animation: slide-in cubic-bezier(.43,.69,.29,1) ${duration}s forwards">
-        ${successSvg}
+        ${errorSvg}
         <div class="wb-msg-content">
         <p class="wb-msg-title">${title || titleText}</p>
         <p class="wb-msg-body">${content || contentText}</p>
@@ -334,7 +334,7 @@ function createSuccessMessage(
   }
   msgWrapper.innerHTML += `
     <div id="msg-${id}" class="wb-msg ${className}" style="transform: translateX(38rem); opacity: 0; animation: slide-in cubic-bezier(.43,.69,.29,1) ${duration}s forwards">
-        ${errorSvg}
+        ${successSvg}
         <div class="wb-msg-content">
         <p class="wb-msg-title">${titleText}</p>
         <p class="wb-msg-body">${contentText}</p>
