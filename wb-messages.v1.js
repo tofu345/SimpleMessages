@@ -4,7 +4,7 @@ var messageStyles = `
         position: fixed;
         top: 0;
         right: 0;
-        z-index: 50;
+        z-index: 9999;
     }
     .wb-error-msg {
         background: linear-gradient(
