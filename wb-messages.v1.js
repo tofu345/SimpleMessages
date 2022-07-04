@@ -161,7 +161,7 @@ function createInfoMessage(
   duration = 0.5,
   title,
   content,
-  timeout = 10,
+  timeout,
   className = "wb-info-msg"
 ) {
   const msgWrapper = document.getElementById("wb-msg-wrapper");
