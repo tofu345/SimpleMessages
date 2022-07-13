@@ -150,12 +150,14 @@ styleSheet.innerText = messageStyles;
 document.head.appendChild(styleSheet);
 
 function hideMessage(id) {
-  const ele = document.getElementById(id);
-  ele.style.transform = "translate-x(38rem)";
-  ele.style.animation = "slide-out ease-in-out 0.5s forwards";
-  setTimeout(() => {
-    ele.remove();
-  }, 600);
+  try {
+    const ele = document.getElementById(id);
+    ele.style.transform = "translate-x(38rem)";
+    ele.style.animation = "slide-out ease-in-out 0.5s forwards";
+    setTimeout(() => {
+      ele.remove();
+    }, 600);
+  } catch {}
 }
 
 function msgTemplate(id, duration, title, content, className, svg) {
