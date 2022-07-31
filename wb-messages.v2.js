@@ -49,6 +49,7 @@ var messageStyles = `
       display: flex;
       align-items: center;
       justify-content: space-between;
+      overflow: auto;
   }
   .wb-msg-svg {
       margin: 0.5rem 1rem 0.5rem 0.5rem;
@@ -197,6 +198,11 @@ function createMessage(title, content, timeout, className, svg) {
   }
   if (content) {
     contentText = content;
+    if (content.length > 10000) {
+      console.error("Content Text Too Long.");
+      console.error(content);
+      return;
+    }
   }
   msgWrapper.innerHTML += msgTemplate(
     id,
