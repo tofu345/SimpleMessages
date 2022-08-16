@@ -199,9 +199,7 @@ function createMessage(title, content, timeout, className, svg) {
   if (content) {
     contentText = content;
     if (content.length > 10000) {
-      console.error("Content Text Too Long.");
-      console.error(content);
-      return;
+      contentText = "Content Too Long.";
     }
   }
   msgWrapper.innerHTML += msgTemplate(
