@@ -1,4 +1,4 @@
-var messageStyles = `
+const messageStyles = `
   @import url("https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
   #wb-msg-wrapper {
       position: fixed;
@@ -50,6 +50,7 @@ var messageStyles = `
       align-items: center;
       justify-content: space-between;
       overflow: auto;
+	  position: relative;
   }
   .wb-msg-svg {
       margin: 0.5rem 1rem 0.5rem 0.5rem;
@@ -60,10 +61,19 @@ var messageStyles = `
       justify-self: center;
   }
   .wb-msg-close {
-      padding: 0;
-      margin: 0 0.5rem 1.5rem 0.5rem;
+	  position: absolute;
+	  top: 7px;
+	  right: 5px;
+      padding: 10px;
+      border-radius: 50%;
+	  display: none;
       cursor: pointer;
   }
+
+  .wb-msg:hover .wb-msg-close {
+	display: block;
+  }
+
   .wb-msg-content {
       align-content: space-around;
       height: 100%;
@@ -85,19 +95,28 @@ var messageStyles = `
       line-height: 19px;
   }
   @keyframes slide-out {
-      100% {
+      50% {
           transform: translateX(38rem);
           opacity: 0;
       }
+	  100% {
+		transform: translateX(38rem);
+		margin:0;
+  		height:0px;
+  		padding:0;
+	  }
   }
   @keyframes slide-in {
+	  0% {
+          transform: translateX(38rem);
+	  }
       100% {
           transform: translateX(0);
           opacity: 1;
       }
   }`;
 
-var errorSvg = `
+const errorSvg = `
   <svg
       class="wb-msg-svg"
       width="48"
@@ -115,7 +134,7 @@ var errorSvg = `
       />
   </svg>`;
 
-var successSvg = `
+const successSvg = `
   <svg
       class="wb-msg-svg"
       width="48"
@@ -132,14 +151,14 @@ var successSvg = `
       />
   </svg>`;
 
-var warningSvg = `
+const warningSvg = `
   <svg class="wb-msg-svg" width="48" height="49" viewBox="0 0 48 49" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="23.8446" cy="24.5001" r="23.7293" fill="#FDBE20"/>
       <path d="M38.3458 24.5005C38.3458 32.5093 31.8533 39.0018 23.8445 39.0018C15.8357 39.0018 9.34326 32.5093 9.34326 24.5005C9.34326 16.4917 15.8357 9.99927 23.8445 9.99927C31.8533 9.99927 38.3458 16.4917 38.3458 24.5005Z" fill="white"/>
       <path d="M16.5373 31.6791C18.1727 33.3154 20.3248 34.3343 22.6272 34.5619C24.9295 34.7894 27.2394 34.2116 29.1636 32.9269C31.0876 31.6423 32.5068 29.7303 33.1792 27.5165C33.8517 25.303 33.7358 22.9245 32.8513 20.787C31.9667 18.6493 30.3684 16.8841 28.3286 15.793C26.2887 14.7017 23.9335 14.3513 21.6642 14.8017C19.3949 15.2521 17.3518 16.4754 15.8836 18.2631C14.4152 20.0508 13.612 22.2925 13.611 24.606C13.6079 25.9199 13.8649 27.2214 14.3671 28.4354C14.8695 29.6494 15.6068 30.7516 16.5373 31.6791ZM17.484 18.479C18.5504 17.3628 19.8955 16.5517 21.3804 16.1296C22.8653 15.7075 24.4358 15.6895 25.9298 16.0778C27.4238 16.466 28.7871 17.2461 29.8787 18.3376C30.9702 19.4293 31.7503 20.7925 32.1385 22.2866C32.5268 23.7807 32.5088 25.3512 32.0868 26.836C31.6646 28.3208 30.8536 29.6659 29.7373 30.7324C28.671 31.8486 27.3259 32.6596 25.841 33.0818C24.3561 33.5038 22.7856 33.5218 21.2916 33.1336C19.7976 32.7453 18.4343 31.9653 17.3427 30.8738C16.2512 29.7821 15.4711 28.4188 15.0829 26.9248C14.6946 25.4307 14.7126 23.8602 15.1346 22.3754C15.5568 20.8906 16.3678 19.5455 17.484 18.479ZM22.9439 25.9389V19.892C22.9439 19.6539 23.071 19.4338 23.2772 19.3147C23.4835 19.1955 23.7376 19.1955 23.9439 19.3147C24.1501 19.4338 24.2772 19.6539 24.2772 19.892V25.9389C24.2772 26.1771 24.1501 26.3972 23.9439 26.5162C23.7376 26.6353 23.4834 26.6353 23.2772 26.5162C23.071 26.3972 22.9439 26.1771 22.9439 25.9389ZM22.7239 29.2722C22.7239 29.0371 22.8172 28.8115 22.9836 28.6453C23.1498 28.4789 23.3754 28.3856 23.6105 28.3856C23.8457 28.3856 24.0713 28.4789 24.2375 28.6453C24.4038 28.8115 24.4971 29.0371 24.4971 29.2722C24.4971 29.5073 24.4038 29.7329 24.2375 29.8992C24.0712 30.0655 23.8457 30.1588 23.6105 30.1588C23.3748 30.1606 23.1483 30.0679 22.9815 29.9012C22.8148 29.7344 22.7221 29.508 22.7239 29.2722Z" fill="#FDBE20"/>
   </svg>`;
 
-var infoSvg = `
+const infoSvg = `
   <svg width="48" class="wb-msg-svg" height="49" viewBox="0 0 48 49" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="23.8446" cy="24.5001" r="23.7293" fill="#3087E9"/>
       <path d="M38.3458 24.5005C38.3458 32.5093 31.8533 39.0018 23.8445 39.0018C15.8357 39.0018 9.34326 32.5093 9.34326 24.5005C9.34326 16.4917 15.8357 9.99927 23.8445 9.99927C31.8533 9.99927 38.3458 16.4917 38.3458 24.5005Z" fill="white"/>
@@ -150,19 +169,27 @@ var styleSheet = document.createElement("style");
 styleSheet.innerText = messageStyles;
 document.head.appendChild(styleSheet);
 
+let msgWrapper = document.getElementById("wb-msg-wrapper");
+if (!msgWrapper) {
+    msgWrapper = document.createElement("div");
+    msgWrapper.id = "wb-msg-wrapper";
+    msgWrapper.style.cssText = "z-index:100";
+    document.body.appendChild(msgWrapper);
+}
+
 function hideMessage(id) {
-  try {
-    const ele = document.getElementById(id);
-    ele.style.transform = "translate-x(38rem)";
-    ele.style.animation = "slide-out ease-in-out 0.5s forwards";
-    setTimeout(() => {
-      ele.remove();
-    }, 600);
-  } catch {}
+    try {
+        const ele = document.getElementById(id);
+        ele.style.transform = "translate-x(38rem)";
+        ele.style.animation = "slide-out ease-in-out 0.5s forwards";
+        setTimeout(() => {
+            ele.remove();
+        }, 600);
+    } catch {}
 }
 
 function msgTemplate(id, title, content, className, svg) {
-  return `
+    return `
     <div id="msg-${id}" class="wb-msg ${className}" style="transform: translateX(38rem); opacity: 0; animation: slide-in cubic-bezier(.43,.69,.29,1) 0.5s forwards">
       ${svg}
       <div class="wb-msg-content">
@@ -187,76 +214,74 @@ function msgTemplate(id, title, content, className, svg) {
 }
 
 function createMessage(title, content, timeout, className, svg) {
-  const msgWrapper = document.getElementById("wb-msg-wrapper");
-  const id = Math.floor(Math.random() * 1000000000);
-  let titleText = "The title of the message";
-  let contentText = `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisc
+    let msgWrapper = document.getElementById("wb-msg-wrapper");
+    if (!msgWrapper) {
+        console.error("Object 'wb-msg-wrapper' not found");
+    }
+
+    const id = Math.floor(Math.random() * 1000000000);
+    let defaultTitle = "The title of the message";
+    let defaultContent = `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisc
     ipsam, earum nam expedita alias aspernatur id harum fugit nemo iure
     ipsa? Aliquam sit nobis voluptatibus iusto animi illum odit! Soluta?`;
-  if (title) {
-    titleText = title;
-  }
-  if (content) {
-    contentText = content;
+
+    if (!title) {
+        title = defaultTitle;
+    }
+    if (!content) {
+        content = defaultContent;
+    }
     if (content.length > 10000) {
-      contentText = "Content Text Too Long.";
-      console.error(contentText);
+        console.warn("Message Content too long\n" + content);
     }
-  }
-  msgWrapper.innerHTML += msgTemplate(
-    id,
-    title || titleText,
-    content || contentText,
-    className,
-    svg
-  );
-  setTimeout(() => {
-    const ele = document.getElementById(`msg-${id}`);
-    ele.style.transform = "translate(0, 0)";
-    ele.style.opacity = "1";
-    ele.style.animation = "";
-    if (timeout) {
-      setTimeout(() => hideMessage("msg-" + id), timeout * 1000);
-    }
-  }, 600);
+    msgWrapper.innerHTML += msgTemplate(id, title, content, className, svg);
+    setTimeout(() => {
+        const ele = document.getElementById(`msg-${id}`);
+        ele.style.transform = "translate(0, 0)";
+        ele.style.opacity = "1";
+        ele.style.animation = "";
+        if (timeout) {
+            setTimeout(() => hideMessage("msg-" + id), timeout * 1000);
+        }
+    }, 600);
 }
 
 function createInfoMessage(
-  title,
-  content,
-  timeout,
-  className = "wb-info-msg",
-  svg = infoSvg
+    title,
+    content,
+    timeout,
+    className = "wb-info-msg",
+    svg = infoSvg
 ) {
-  createMessage(title, content, timeout, className, svg);
+    createMessage(title, content, timeout, className, svg);
 }
 
 function createWarningMessage(
-  title,
-  content,
-  timeout,
-  className = "wb-warning-msg",
-  svg = warningSvg
+    title,
+    content,
+    timeout,
+    className = "wb-warning-msg",
+    svg = warningSvg
 ) {
-  createMessage(title, content, timeout, className, svg);
+    createMessage(title, content, timeout, className, svg);
 }
 
 function createErrorMessage(
-  title,
-  content,
-  timeout,
-  className = "wb-error-msg",
-  svg = errorSvg
+    title,
+    content,
+    timeout,
+    className = "wb-error-msg",
+    svg = errorSvg
 ) {
-  createMessage(title, content, timeout, className, svg);
+    createMessage(title, content, timeout, className, svg);
 }
 
 function createSuccessMessage(
-  title,
-  content,
-  timeout,
-  className = "wb-success-msg",
-  svg = successSvg
+    title,
+    content,
+    timeout,
+    className = "wb-success-msg",
+    svg = successSvg
 ) {
-  createMessage(title, content, timeout, className, svg);
+    createMessage(title, content, timeout, className, svg);
 }
